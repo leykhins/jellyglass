@@ -6,3 +6,4 @@
 /uploads/
 /backup-*.json
 /.thumbnail
+/tools/.cache/

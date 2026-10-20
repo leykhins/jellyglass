@@ -32,6 +32,12 @@ ticked, and paste:
 })();
 ```
 
+**Offline.** `dist/jellyglass.local.css` is the same theme with its fonts embedded, so it never needs the internet.
+Paste the whole file into Custom CSS instead of the `@import` line. For the posters, paste the whole of
+`theme/jellyglass.js` into JavaScript Injector instead of the loader. Icons the build doesn't include fall back to
+Jellyfin's own bundled icon font. To change which icons are embedded, edit `tools/icons.txt`, then rebuild with
+`python tools/build_local.py` (needs `pip install fonttools brotli`).
+
 jsDelivr caches `@main` for up to 12 hours. To pick up a change sooner, purge the cache by opening
 `https://purge.jsdelivr.net/gh/leykhins/jellyglass@main/theme/jellyglass.css`, and the same address for `jellyglass.js`.
 
@@ -52,3 +58,7 @@ Header and library nav, home hero, My Media tiles, home rows and cards, library 
   "anime" gets it automatically.
 - **Sign-in profiles.** "Who's watching?" circles only appear for users who aren't hidden from the login screen.
 - **Admin dashboard.** Gets the palette and type, but not a redesigned layout.
+
+## Licences
+
+Fonts embedded in the offline build: Onest (SIL Open Font License 1.1) and Material Symbols (Apache License 2.0).

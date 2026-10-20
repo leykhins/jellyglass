@@ -1,7 +1,9 @@
 /*
  * jellyglass — a Jellyfin web theme
+ * https://github.com/leykhins/jellyglass
  * Install: Dashboard → General → Custom CSS
- *   @import url("https://cdn.jsdelivr.net/gh/<you>/jellyglass@main/theme/jellyglass.css");
+ *   @import url("https://cdn.jsdelivr.net/gh/leykhins/jellyglass@main/theme/jellyglass.css");
+ * Offline: paste dist/jellyglass.local.css instead.
  * Built against jellyfin-web 12.2 (MUI app bar layout).
  */
 
@@ -40,7 +42,7 @@
   --jg-r-lg: 14px;
 
   --jg-font: "Onest", system-ui, sans-serif;
-  --jg-icons: "Material Symbols Rounded";
+  --jg-icons: "Material Symbols Rounded", "Material Icons";
   --jg-gutter: clamp(20px, 4vw, 48px);
   --jg-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
 }
@@ -896,8 +898,16 @@ header.MuiAppBar-root .MuiIconButton-root:has(.MuiAvatar-root) {
   color: inherit !important;
 }
 
-#slides-container .button-container .detail-button {
+#slides-container .button-container .trailer-button {
   order: 2;
+}
+
+#slides-container .button-container .trailer-button::before {
+  font-variation-settings: "FILL" 0;
+}
+
+#slides-container .button-container .detail-button {
+  order: 3;
 }
 
 #slides-container .button-container .detail-button::before {
@@ -905,7 +915,7 @@ header.MuiAppBar-root .MuiIconButton-root:has(.MuiAvatar-root) {
 }
 
 #slides-container .button-container .favorite-button {
-  order: 3;
+  order: 4;
 }
 
 #slides-container .button-container .favorite-button::before {
@@ -984,6 +994,15 @@ header.MuiAppBar-root .MuiIconButton-root:has(.MuiAvatar-root) {
 
 #slides-container .mute-button {
   right: calc(var(--jg-gutter) + 46px) !important;
+}
+
+/* Nothing to mute when no trailer is playing */
+#slides-container:not(:has(.slide.active.with-video)) .mute-button {
+  display: none !important;
+}
+
+#slides-container:not(:has(.slide.active.with-video)) .pause-button {
+  right: var(--jg-gutter) !important;
 }
 
 #slides-container .pause-button:hover,
