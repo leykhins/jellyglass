@@ -1,0 +1,2228 @@
+/*
+ * jellyglass — a Jellyfin web theme
+ * Install: Dashboard → General → Custom CSS
+ *   @import url("https://cdn.jsdelivr.net/gh/<you>/jellyglass@main/theme/jellyglass.css");
+ * Built against jellyfin-web 12.2 (MUI app bar layout).
+ */
+
+@import url("https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300..500,0..1,0&display=block");
+
+/* ───────────────────────── Tokens ───────────────────────── */
+
+:root {
+  --jg-bg: #14161c;
+  --jg-bg-deep: #07080a;
+  --jg-surface: #1c1f27;
+  --jg-surface-2: #262a35;
+  --jg-line: #2a2e38;
+  --jg-line-strong: #343947;
+  --jg-text: #ecedf1;
+  --jg-text-2: #c9ccd5;
+  --jg-text-3: #9ca1ae;
+  --jg-text-4: #7d8291;
+  --jg-accent: oklch(0.78 0.11 230);
+  --jg-accent-soft: oklch(0.78 0.11 230 / 0.18);
+  --jg-warn: oklch(0.82 0.12 80);
+  --jg-danger: oklch(0.75 0.15 25);
+
+  --jg-glass: rgba(236, 237, 241, 0.12);
+  --jg-glass-hover: rgba(236, 237, 241, 0.2);
+  --jg-glass-line: rgba(255, 255, 255, 0.1);
+  --jg-pill: rgba(30, 33, 42, 0.42);
+
+  /* The sheen laid over every piece of artwork */
+  --jg-sheen: linear-gradient(160deg, rgba(255, 255, 255, 0.26) 0%, rgba(255, 255, 255, 0.08) 28%, rgba(255, 255, 255, 0) 50%);
+  --jg-sheen-edge: inset 0 0 0 1px rgba(255, 255, 255, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.38);
+
+  --jg-r-sm: 8px;
+  --jg-r: 10px;
+  --jg-r-lg: 14px;
+
+  --jg-font: "Onest", system-ui, sans-serif;
+  --jg-icons: "Material Symbols Rounded";
+  --jg-gutter: clamp(20px, 4vw, 48px);
+  --jg-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+/* MUI palette (app bar, menus, dashboard widgets) */
+html[data-theme],
+html:root {
+  --jf-palette-primary-main: oklch(0.78 0.11 230);
+  --jf-palette-primary-light: oklch(0.86 0.08 230);
+  --jf-palette-primary-dark: oklch(0.66 0.12 230);
+  --jf-palette-primary-contrastText: #14161c;
+  --jf-palette-primary-mainChannel: 94 190 236;
+  --jf-palette-secondary-main: oklch(0.78 0.11 230);
+  --jf-palette-background-default: #14161c;
+  --jf-palette-background-paper: #1c1f27;
+  --jf-palette-background-defaultChannel: 20 22 28;
+  --jf-palette-background-paperChannel: 28 31 39;
+  --jf-palette-AppBar-darkBg: transparent;
+  --jf-palette-text-primary: #ecedf1;
+  --jf-palette-text-secondary: #9ca1ae;
+  --jf-palette-divider: #2a2e38;
+  --jf-palette-action-hover: rgba(255, 255, 255, 0.06);
+  --jf-palette-action-selected: rgba(255, 255, 255, 0.1);
+  --jf-shape-borderRadius: 10px;
+  --jf-font-button: 500 0.875rem/1.5 var(--jg-font);
+  --jf-font-body1: 400 0.9375rem/1.5 var(--jg-font);
+  --jf-font-body2: 400 0.875rem/1.45 var(--jg-font);
+  --jf-font-h1: 600 1.875rem/1.15 var(--jg-font);
+  --jf-font-h2: 600 1.5rem/1.2 var(--jg-font);
+  --jf-font-h3: 600 1.25rem/1.25 var(--jg-font);
+  --jf-font-h4: 600 1.875rem/1.2 var(--jg-font);
+  --jf-font-h5: 600 1.25rem/1.3 var(--jg-font);
+  --jf-font-h6: 600 1.0625rem/1.4 var(--jg-font);
+  --jf-font-subtitle1: 500 0.9375rem/1.5 var(--jg-font);
+  --jf-font-subtitle2: 500 0.8125rem/1.45 var(--jg-font);
+  --jf-font-caption: 400 0.75rem/1.45 var(--jg-font);
+  --jf-font-overline: 500 0.75rem/1.6 var(--jg-font);
+}
+
+/* ───────────────────────── Base ───────────────────────── */
+
+html,
+body,
+.backgroundContainer,
+.dialog {
+  background-color: var(--jg-bg);
+}
+
+/* Video playback renders beneath the page; keep every layer above it clear */
+.transparentDocument,
+.transparentDocument body,
+.transparentDocument .skinBody,
+.transparentDocument .backgroundContainer {
+  background: transparent !important;
+}
+
+body,
+button,
+input,
+select,
+textarea,
+.emby-button,
+.MuiTypography-root,
+.MuiButtonBase-root,
+.MuiInputBase-root {
+  font-family: var(--jg-font) !important;
+}
+
+body {
+  color: var(--jg-text);
+  font-size: 14px;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+}
+
+.backgroundContainer.withBackdrop {
+  background-color: rgba(20, 22, 28, 0.92);
+}
+
+::selection {
+  background: var(--jg-accent-soft);
+}
+
+:focus-visible {
+  outline: 2px solid var(--jg-accent);
+  outline-offset: 2px;
+}
+
+* {
+  scrollbar-color: var(--jg-line-strong) transparent;
+  scrollbar-width: thin;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--jg-line-strong);
+  border: 3px solid var(--jg-bg);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Rounded symbols in place of the filled Material Icons set.
+   Both fonts share codepoints, so Jellyfin's icon classes keep working. */
+.material-icons {
+  font-family: var(--jg-icons) !important;
+  font-weight: 400;
+  font-variation-settings: "FILL" 0, "wght" 400, "opsz" 24;
+}
+
+.btnPlay .material-icons,
+.play_arrow,
+.pause,
+.material-icons.favorite,
+[data-isfavorite="true"] .material-icons,
+.playstatebutton-icon-played,
+.cardOverlayFab-primary .material-icons {
+  font-variation-settings: "FILL" 1, "wght" 400, "opsz" 24;
+}
+
+/* ───────────────────────── Header ───────────────────────── */
+
+/* Frosted glass that fades out at its lower edge instead of a solid bar */
+header.MuiAppBar-root,
+.skinHeader {
+  background: linear-gradient(rgba(20, 22, 28, 0.85), rgba(20, 22, 28, 0.45) 60%, rgba(20, 22, 28, 0)) !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+
+header.MuiAppBar-root::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  backdrop-filter: blur(14px);
+  -webkit-mask-image: linear-gradient(#000 55%, transparent);
+  mask-image: linear-gradient(#000 55%, transparent);
+  pointer-events: none;
+}
+
+.skinHeader.semiTransparent,
+.skinHeader-blurred {
+  backdrop-filter: none !important;
+}
+
+header.MuiAppBar-root .MuiToolbar-root {
+  min-height: 72px;
+  padding-top: 14px;
+  padding-bottom: 14px;
+  padding-left: var(--jg-gutter) !important;
+  padding-right: var(--jg-gutter) !important;
+}
+
+/* Server name sits on the left; library links form a centred pill */
+header.MuiAppBar-root .MuiToolbar-root > .MuiStack-root {
+  display: contents;
+}
+
+header.MuiAppBar-root .MuiToolbar-root > .MuiStack-root > a {
+  margin: 0 !important;
+}
+
+/* Left and right groups take equal space so the pill lands in the centre.
+   The avatar sits in its own box, so the left side reserves its width too. */
+header.MuiAppBar-root .MuiToolbar-root > .MuiStack-root > a[href="#/"],
+header.MuiAppBar-root .MuiToolbar-root > .MuiStack-root + .MuiBox-root {
+  flex: 1 1 0;
+  min-width: max-content;
+}
+
+header.MuiAppBar-root .MuiToolbar-root > .MuiStack-root > a[href="#/"] {
+  margin-right: 48px !important;
+}
+
+header.MuiAppBar-root .MuiToolbar-root > .MuiStack-root + .MuiBox-root {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+header.MuiAppBar-root .MuiToolbar-root > .MuiStack-root > a[href="#/"] {
+  justify-content: flex-start;
+  padding: 6px 0;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  text-transform: none;
+  color: var(--jg-text);
+  background: none;
+}
+
+header.MuiAppBar-root .MuiToolbar-root > .MuiStack-root > a[href="#/"] img {
+  display: none;
+}
+
+header.MuiAppBar-root .MuiToolbar-root > .MuiStack-root > a:not([href="#/"]) {
+  position: relative;
+  isolation: isolate;
+  height: 46px;
+  min-width: 0;
+  padding: 0 16px;
+  border-radius: 0;
+  border-block: 1px solid var(--jg-line-strong);
+  background: var(--jg-pill);
+  backdrop-filter: blur(16px);
+  color: var(--jg-text-2);
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: none;
+  white-space: nowrap;
+}
+
+header.MuiAppBar-root .MuiToolbar-root > .MuiStack-root > a[href="#/"] + a {
+  border-left: 1px solid var(--jg-line-strong);
+  border-radius: 999px 0 0 999px;
+  padding-left: 18px;
+}
+
+header.MuiAppBar-root .MuiToolbar-root > .MuiStack-root > a:not([href="#/"]):last-child {
+  border-right: 1px solid var(--jg-line-strong);
+  border-radius: 0 999px 999px 0;
+  padding-right: 18px;
+}
+
+header.MuiAppBar-root .MuiToolbar-root > .MuiStack-root > a:not([href="#/"])::before {
+  content: "";
+  position: absolute;
+  inset: 5px 3px;
+  z-index: -1;
+  border-radius: 999px;
+  background: transparent;
+  transition: background-color 0.15s;
+}
+
+header.MuiAppBar-root .MuiToolbar-root > .MuiStack-root > a:not([href="#/"]):hover {
+  color: var(--jg-text);
+  background: var(--jg-pill);
+}
+
+header.MuiAppBar-root .MuiToolbar-root > .MuiStack-root > a:not([href="#/"]):hover::before {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+header.MuiAppBar-root .MuiToolbar-root > .MuiStack-root > a.MuiButton-colorPrimary {
+  color: var(--jg-text);
+  font-weight: 600;
+}
+
+header.MuiAppBar-root .MuiToolbar-root > .MuiStack-root > a.MuiButton-colorPrimary::before {
+  background: rgba(236, 237, 241, 0.14);
+}
+
+header.MuiAppBar-root .MuiStack-root a .MuiButton-startIcon svg {
+  font-size: 19px;
+}
+
+/* Design icons: swap Material UI's filled SVGs for Rounded Symbols.
+   The SVGs name themselves in data-testid, so this follows whatever links exist. */
+header.MuiAppBar-root :is(.MuiButton-startIcon, .MuiIconButton-root):has(> svg[data-testid]) > svg {
+  display: none;
+}
+
+header.MuiAppBar-root :is(.MuiButton-startIcon, .MuiIconButton-root):has(> svg[data-testid])::before {
+  content: var(--jg-glyph, "");
+  font-family: var(--jg-icons);
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1;
+  font-variation-settings: "FILL" 0, "wght" 400, "opsz" 24;
+  font-feature-settings: "liga";
+}
+
+header.MuiAppBar-root .MuiButton-startIcon:has(> svg[data-testid])::before {
+  width: 20px;
+  display: inline-block;
+}
+
+header.MuiAppBar-root a.MuiButton-colorPrimary .MuiButton-startIcon::before {
+  font-variation-settings: "FILL" 1, "wght" 400, "opsz" 24;
+}
+
+header.MuiAppBar-root :has(> svg[data-testid="HomeIcon"]) { --jg-glyph: "home"; }
+header.MuiAppBar-root :has(> svg[data-testid="FavoriteIcon"]) { --jg-glyph: "favorite"; }
+header.MuiAppBar-root :has(> svg[data-testid="MovieIcon"]) { --jg-glyph: "movie"; }
+header.MuiAppBar-root :has(> svg[data-testid="TvIcon"]) { --jg-glyph: "tv"; }
+header.MuiAppBar-root :has(> svg[data-testid="VideoLibraryIcon"]) { --jg-glyph: "collections_bookmark"; }
+header.MuiAppBar-root :has(> svg[data-testid="LibraryMusicIcon"]),
+header.MuiAppBar-root :has(> svg[data-testid="MusicNoteIcon"]) { --jg-glyph: "library_music"; }
+header.MuiAppBar-root :has(> svg[data-testid="LiveTvIcon"]) { --jg-glyph: "live_tv"; }
+header.MuiAppBar-root :has(> svg[data-testid="BookIcon"]),
+header.MuiAppBar-root :has(> svg[data-testid="MenuBookIcon"]) { --jg-glyph: "menu_book"; }
+header.MuiAppBar-root :has(> svg[data-testid="PhotoLibraryIcon"]) { --jg-glyph: "photo_library"; }
+header.MuiAppBar-root :has(> svg[data-testid="QueueMusicIcon"]),
+header.MuiAppBar-root :has(> svg[data-testid="PlaylistPlayIcon"]) { --jg-glyph: "queue_music"; }
+header.MuiAppBar-root :has(> svg[data-testid="FolderIcon"]) { --jg-glyph: "folder"; }
+header.MuiAppBar-root :has(> svg[data-testid="SearchIcon"]) { --jg-glyph: "search"; }
+header.MuiAppBar-root :has(> svg[data-testid="CastIcon"]) { --jg-glyph: "cast"; }
+header.MuiAppBar-root :has(> svg[data-testid="CastConnectedIcon"]) { --jg-glyph: "cast_connected"; }
+header.MuiAppBar-root :has(> svg[data-testid="GroupsIcon"]) { --jg-glyph: "groups"; }
+header.MuiAppBar-root :has(> svg[data-testid="PersonIcon"]) { --jg-glyph: "person"; }
+header.MuiAppBar-root :has(> svg[data-testid="MenuIcon"]) { --jg-glyph: "menu"; }
+header.MuiAppBar-root :has(> svg[data-testid="ArrowBackIcon"]) { --jg-glyph: "arrow_back"; }
+
+/* Libraries are told apart by type only, so anime gets its own icon by name.
+   Matches a library whose link carries this server's anime library id. */
+header.MuiAppBar-root a[href*="topParentId=b434bd24836c87d7ed200dcf350c0a2a"] .MuiButton-startIcon { --jg-glyph: "animation"; }
+
+header.MuiAppBar-root .MuiTouchRipple-root {
+  display: none;
+}
+
+/* Round icon buttons on the right */
+header.MuiAppBar-root .MuiIconButton-root {
+  width: 40px;
+  height: 40px;
+  margin-left: 8px;
+  padding: 0;
+  border: 1px solid var(--jg-line-strong);
+  background: rgba(20, 22, 28, 0.35);
+  backdrop-filter: blur(12px);
+  color: var(--jg-text);
+}
+
+header.MuiAppBar-root .MuiIconButton-root:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+header.MuiAppBar-root .MuiIconButton-root svg {
+  font-size: 20px;
+}
+
+header.MuiAppBar-root .MuiAvatar-root {
+  width: 40px;
+  height: 40px;
+  background: oklch(0.45 0.1 330);
+  color: var(--jg-text);
+  font-weight: 600;
+  font-size: 15px;
+}
+
+header.MuiAppBar-root .MuiIconButton-root:has(.MuiAvatar-root) {
+  border: 0;
+}
+
+/* Legacy header (dashboard, player, older pages) */
+.skinHeader .headerButton,
+.skinHeader .paper-icon-button-light {
+  color: var(--jg-text);
+}
+
+.pageTitle {
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+/* ───────────────────────── Menus & dialogs ───────────────────────── */
+
+.MuiPaper-root.MuiMenu-paper,
+.MuiPopover-paper,
+.MuiDrawer-paper,
+.actionSheet,
+.dialog:not(.dialog-fullscreen),
+.focuscontainer.dialog {
+  background: var(--jg-surface) !important;
+  background-image: none !important;
+  border: 1px solid var(--jg-line);
+  border-radius: var(--jg-r-lg) !important;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5) !important;
+  color: var(--jg-text);
+}
+
+.MuiDrawer-paper {
+  border-radius: 0 !important;
+  border-width: 0 1px 0 0;
+  background: #111318 !important;
+}
+
+.MuiMenuItem-root,
+.actionSheetMenuItem,
+.listItem-button {
+  border-radius: var(--jg-r-sm);
+  margin: 0 6px;
+}
+
+.actionSheetContent {
+  padding: 6px 0;
+}
+
+.actionSheetMenuItem:hover,
+.MuiMenuItem-root:hover {
+  background: rgba(255, 255, 255, 0.06) !important;
+}
+
+.actionsheetMenuItemIcon {
+  color: var(--jg-text-3);
+}
+
+.actionSheetTitle,
+.formDialogHeaderTitle {
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.formDialogHeader {
+  background: transparent;
+  border-bottom: 1px solid var(--jg-line);
+}
+
+.formDialogFooter {
+  background: var(--jg-surface);
+  border-top: 1px solid var(--jg-line);
+}
+
+.dialogBackdropOpened {
+  background: rgba(6, 7, 10, 0.6);
+  opacity: 1;
+}
+
+.MuiDivider-root {
+  border-color: var(--jg-line);
+}
+
+.toast {
+  background: var(--jg-surface-2);
+  color: var(--jg-text);
+  border: 1px solid var(--jg-line-strong);
+  border-radius: var(--jg-r);
+}
+
+/* ───────────────────────── Buttons ───────────────────────── */
+
+.emby-button {
+  border-radius: var(--jg-r);
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.raised,
+.button-submit,
+.emby-button.raised {
+  background: var(--jg-glass);
+  color: var(--jg-text);
+  border: 1px solid var(--jg-glass-line);
+  border-radius: var(--jg-r);
+  box-shadow: none;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 11px 20px;
+}
+
+.raised:hover,
+.emby-button.raised:hover {
+  background: var(--jg-glass-hover);
+}
+
+.button-submit,
+.emby-button.button-submit,
+.raised.button-submit {
+  background: var(--jg-text);
+  color: var(--jg-bg);
+  border-color: transparent;
+  font-weight: 600;
+}
+
+.button-submit:hover,
+.raised.button-submit:hover {
+  background: #fff;
+}
+
+.raised.cancel,
+.button-cancel {
+  background: none;
+  border: 1px solid var(--jg-line-strong);
+  color: var(--jg-text);
+}
+
+.raised.cancel:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.button-flat:hover {
+  color: var(--jg-text);
+}
+
+.button-link {
+  color: var(--jg-accent);
+}
+
+.MuiButton-contained {
+  border-radius: var(--jg-r) !important;
+  box-shadow: none !important;
+  text-transform: none !important;
+  font-weight: 600 !important;
+}
+
+/* Primary actions are light, like the Play button */
+.MuiButton-containedPrimary {
+  background: var(--jg-text) !important;
+  color: var(--jg-bg) !important;
+}
+
+.MuiButton-containedPrimary:hover {
+  background: #fff !important;
+}
+
+.MuiButtonGroup-contained {
+  box-shadow: none !important;
+  border-radius: var(--jg-r) !important;
+}
+
+.MuiButtonGroup-groupedContained:not(.MuiButtonGroup-firstButton) {
+  background: var(--jg-glass) !important;
+  color: var(--jg-text) !important;
+  border: 1px solid var(--jg-glass-line) !important;
+  border-left: 0 !important;
+}
+
+.MuiButtonGroup-groupedContained:not(.MuiButtonGroup-firstButton):hover {
+  background: var(--jg-glass-hover) !important;
+}
+
+.MuiButtonGroup-groupedContained.MuiButtonGroup-firstButton {
+  border-right: 0 !important;
+}
+
+.MuiButtonGroup-grouped {
+  border-color: var(--jg-line) !important;
+}
+
+.MuiToolbar-root .MuiTypography-h2 {
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.MuiChip-root {
+  background: var(--jg-surface-2) !important;
+  color: var(--jg-text-2) !important;
+  font-weight: 600;
+}
+
+.MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track {
+  background-color: var(--jg-accent) !important;
+  opacity: 1 !important;
+}
+
+/* ───────────────────────── Form fields ───────────────────────── */
+
+.emby-input,
+.emby-textarea,
+.emby-select,
+.emby-select-withcolor,
+.MuiOutlinedInput-root {
+  background: var(--jg-surface) !important;
+  border: 1px solid var(--jg-line) !important;
+  border-radius: var(--jg-r) !important;
+  color: var(--jg-text) !important;
+  font-size: 15px;
+}
+
+.emby-input,
+.emby-textarea,
+.emby-select {
+  padding: 11px 14px;
+}
+
+.emby-input:focus,
+.emby-textarea:focus,
+.emby-select:focus,
+.MuiOutlinedInput-root.Mui-focused {
+  border-color: var(--jg-accent) !important;
+  box-shadow: 0 0 0 3px var(--jg-accent-soft);
+  outline: none;
+}
+
+.MuiOutlinedInput-notchedOutline {
+  border: 0 !important;
+}
+
+.inputLabel,
+.selectLabel,
+.textareaLabel {
+  color: var(--jg-text-3);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.inputLabelFocused,
+.selectLabelFocused,
+.textareaLabelFocused {
+  color: var(--jg-text-2);
+}
+
+.fieldDescription {
+  color: var(--jg-text-4);
+}
+
+.checkboxOutline {
+  border-color: var(--jg-line-strong);
+  border-radius: 6px;
+}
+
+.emby-checkbox:checked + span + .checkboxOutline {
+  background: var(--jg-accent);
+  border-color: var(--jg-accent);
+}
+
+.emby-checkbox:checked + span + .checkboxOutline .checkboxIcon-checked {
+  color: var(--jg-bg);
+}
+
+.emby-checkbox:focus-visible + span + .checkboxOutline {
+  box-shadow: 0 0 0 3px var(--jg-accent-soft);
+}
+
+.checkboxLabel {
+  color: var(--jg-text-2);
+}
+
+.emby-toggle:checked {
+  background: var(--jg-accent);
+}
+
+/* ───────────────────────── Home hero (Media Bar Enhanced) ───────────────────────── */
+
+/* The Abyss spotlight is still injected by a script in index.html. Hide it so
+   Media Bar Enhanced is the only hero; nothing on disk needs to change. */
+#homeTab > .featurediframe,
+#abyss-spotlight-backdrop {
+  display: none !important;
+}
+
+/* Each slide becomes one bottom-left column, in the design's order:
+   title, details, genres, overview, actions */
+#slides-container .slide {
+  display: flex !important;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 0 var(--jg-gutter) 20vh;
+  box-sizing: border-box;
+  font-family: var(--jg-font);
+}
+
+#slides-container .slide > .logo-container,
+#slides-container .slide > .info-container,
+#slides-container .slide > .genre,
+#slides-container .slide > .plot-container,
+#slides-container .slide > .button-container {
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  z-index: 5;
+  margin: 0 !important;
+  transform: none !important;
+}
+
+#slides-container .logo-container {
+  order: 1;
+  width: min(520px, 46vw) !important;
+  height: auto !important;
+  max-height: 22vh;
+  justify-content: flex-start;
+  margin-bottom: 6px !important;
+}
+
+#slides-container .logo {
+  position: static !important;
+  transform: none !important;
+  left: auto !important;
+  top: auto !important;
+  display: block;
+  max-height: 20vh !important;
+  max-width: 100% !important;
+  object-position: left bottom;
+  filter: drop-shadow(0 4px 24px rgba(0, 0, 0, 0.45)) !important;
+}
+
+#slides-container .logo-title-fallback {
+  font-family: var(--jg-font) !important;
+  font-size: clamp(40px, 6vw, 68px) !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.035em;
+  line-height: 1.08 !important;
+  padding-bottom: 0 !important;
+  margin-bottom: 0 !important;
+  color: var(--jg-text) !important;
+}
+
+#slides-container .info-container {
+  order: 2;
+  justify-content: flex-start;
+  color: var(--jg-text-2) !important;
+  font-weight: 400 !important;
+}
+
+#slides-container .misc-info,
+#slides-container .runTime,
+#slides-container .date,
+#slides-container .genre,
+#slides-container .critic-rating {
+  font-family: var(--jg-font) !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  color: var(--jg-text-2) !important;
+  letter-spacing: 0;
+}
+
+#slides-container .misc-info {
+  gap: 14px !important;
+}
+
+#slides-container .star-rating-container,
+#slides-container .critic-rating {
+  font-weight: 600 !important;
+  color: var(--jg-text) !important;
+  gap: 6px;
+}
+
+#slides-container .community-rating-star {
+  font-family: var(--jg-icons) !important;
+  font-variation-settings: "FILL" 1;
+  color: #f5c518 !important;
+  font-size: 18px !important;
+}
+
+#slides-container .age-rating {
+  border: 1px solid #4a4f5c !important;
+  border-radius: 4px !important;
+  padding: 1px 6px !important;
+  font-size: 12px !important;
+  background: none !important;
+  color: var(--jg-text-2) !important;
+}
+
+/* Gaps separate the details; genres read as a comma list */
+#slides-container .misc-info .separator-icon {
+  display: none !important;
+}
+
+#slides-container .genre .separator-icon {
+  display: inline !important;
+  font-size: 0 !important;
+  color: inherit !important;
+}
+
+#slides-container .genre .separator-icon::before {
+  content: ",";
+  font-family: var(--jg-font);
+  font-size: 14px;
+  margin-right: 0.35em;
+}
+
+#slides-container .genre {
+  order: 3;
+  gap: 0 !important;
+  justify-content: flex-start;
+  color: var(--jg-text-3) !important;
+  word-spacing: 0.1em;
+}
+
+#slides-container .plot-container {
+  order: 4;
+  width: auto !important;
+  max-width: 52ch;
+  height: auto !important;
+  color: var(--jg-text-2) !important;
+  text-align: left !important;
+}
+
+#slides-container .plot {
+  font-family: var(--jg-font) !important;
+  font-size: 16px !important;
+  line-height: 1.55 !important;
+  text-wrap: pretty;
+  -webkit-line-clamp: 3 !important;
+  line-clamp: 3;
+}
+
+#slides-container .button-container {
+  order: 5;
+  gap: 10px !important;
+  padding-top: 6px;
+}
+
+#slides-container .button-container button {
+  height: 46px !important;
+  min-width: 46px;
+  width: auto !important;
+  margin: 0 !important;
+  padding: 0 14px !important;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: var(--jg-r) !important;
+  border: 1px solid var(--jg-glass-line) !important;
+  background: var(--jg-glass) !important;
+  backdrop-filter: blur(14px);
+  color: var(--jg-text) !important;
+  font-family: var(--jg-font) !important;
+  font-size: 15px !important;
+  font-weight: 500 !important;
+  box-shadow: none !important;
+  transform: none !important;
+  transition: background-color 0.15s !important;
+}
+
+#slides-container .button-container button:hover {
+  background: var(--jg-glass-hover) !important;
+}
+
+#slides-container .button-container button::before {
+  font-family: var(--jg-icons) !important;
+  font-size: 22px !important;
+  font-weight: 400;
+  line-height: 1;
+  font-variation-settings: "FILL" 0;
+}
+
+#slides-container .button-container .play-button {
+  order: 1;
+  padding: 0 22px 0 16px !important;
+  background: var(--jg-text) !important;
+  border-color: transparent !important;
+  color: var(--jg-bg) !important;
+  backdrop-filter: none;
+  font-weight: 600 !important;
+}
+
+#slides-container .button-container .play-button:hover {
+  background: #fff !important;
+}
+
+#slides-container .button-container .play-button::before {
+  font-size: 26px !important;
+  font-variation-settings: "FILL" 1;
+}
+
+#slides-container .play-text {
+  font: inherit !important;
+  color: inherit !important;
+}
+
+#slides-container .button-container .detail-button {
+  order: 2;
+}
+
+#slides-container .button-container .detail-button::before {
+  content: "info";
+}
+
+#slides-container .button-container .favorite-button {
+  order: 3;
+}
+
+#slides-container .button-container .favorite-button::before {
+  content: "favorite";
+}
+
+#slides-container .button-container .favorite-button.favorited::before {
+  color: #ff5a6e;
+  font-variation-settings: "FILL" 1;
+}
+
+/* Shade from the left for the text, and fade into the page at the bottom */
+#slides-container .gradient-overlay {
+  background:
+    linear-gradient(90deg, rgba(20, 22, 28, 0.85) 0%, rgba(20, 22, 28, 0.4) 40%, rgba(20, 22, 28, 0) 70%),
+    linear-gradient(180deg, rgba(20, 22, 28, 0.45) 0%, rgba(20, 22, 28, 0) 22%, rgba(20, 22, 28, 0) 50%, #14161c 100%) !important;
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+}
+
+#slides-container .backdrop-overlay {
+  background: none !important;
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+  border-radius: 0 !important;
+}
+
+/* Slide position: thin bars, bottom right */
+#slides-container .dots-container {
+  transform: none !important;
+  scale: 1 !important;
+  width: auto !important;
+  top: auto !important;
+  bottom: calc(20vh + 10px) !important;
+  right: var(--jg-gutter) !important;
+  gap: 8px;
+  padding: 0 !important;
+}
+
+#slides-container .dot {
+  width: 28px !important;
+  height: 3px !important;
+  margin: 0 !important;
+  border-radius: 2px !important;
+  background: rgba(236, 237, 241, 0.25) !important;
+  transform: none !important;
+}
+
+#slides-container .dot.active {
+  background: var(--jg-text) !important;
+}
+
+#slides-container .dots-container .media-bar-progress-bar {
+  display: none !important;
+}
+
+/* Pause and mute: small glass circles under the header */
+#slides-container .pause-button,
+#slides-container .mute-button {
+  top: 88px !important;
+  width: 36px;
+  height: 36px;
+  display: grid !important;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(20, 22, 28, 0.35);
+  backdrop-filter: blur(12px);
+  opacity: 0.75 !important;
+  text-shadow: none !important;
+}
+
+#slides-container .pause-button {
+  right: var(--jg-gutter) !important;
+}
+
+#slides-container .mute-button {
+  right: calc(var(--jg-gutter) + 46px) !important;
+}
+
+#slides-container .pause-button:hover,
+#slides-container .mute-button:hover {
+  opacity: 1 !important;
+}
+
+#slides-container .pause-button i,
+#slides-container .mute-button i {
+  font-family: var(--jg-icons) !important;
+  font-size: 20px !important;
+  line-height: 1 !important;
+}
+
+#slides-container .arrow {
+  display: none !important;
+}
+
+@media (max-width: 50em) {
+  #slides-container .slide {
+    gap: 12px;
+    padding-bottom: 15vh;
+  }
+
+  #slides-container .logo-container {
+    width: 72vw !important;
+    max-height: 14vh;
+  }
+
+  #slides-container .logo {
+    max-height: 12vh !important;
+  }
+
+  #slides-container .misc-info {
+    flex-wrap: wrap;
+    justify-content: flex-start !important;
+    gap: 6px 12px !important;
+  }
+
+  #slides-container .runTime {
+    width: auto !important;
+    justify-content: flex-start !important;
+    margin: 0 !important;
+  }
+
+  #slides-container .dots-container {
+    bottom: calc(15vh - 30px) !important;
+    left: var(--jg-gutter) !important;
+    right: auto !important;
+    gap: 6px;
+  }
+
+  #slides-container .dot {
+    width: 18px !important;
+  }
+}
+
+/* The media bar's settings button matches the other header buttons */
+header.MuiAppBar-root .media-bar-settings-button {
+  border: 1px solid var(--jg-line-strong) !important;
+  background: rgba(20, 22, 28, 0.35) !important;
+}
+
+header.MuiAppBar-root .media-bar-settings-button img {
+  width: 20px !important;
+  height: 20px !important;
+  filter: brightness(0) invert(0.93);
+}
+
+/* ───────────────────────── Sections ───────────────────────── */
+
+.sectionTitle,
+.sectionTitle-cards {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--jg-text);
+}
+
+.sectionTitleTextButton .material-icons {
+  color: var(--jg-text-3);
+  font-size: 22px;
+}
+
+.sectionTitleTextButton:hover .material-icons {
+  color: var(--jg-text);
+}
+
+.verticalSection {
+  margin-bottom: 18px;
+}
+
+.padded-left,
+.homeSectionsContainer .sectionTitleContainer {
+  padding-left: var(--jg-gutter) !important;
+}
+
+.padded-right {
+  padding-right: var(--jg-gutter) !important;
+}
+
+.homeSectionsContainer .emby-scroller {
+  padding-left: var(--jg-gutter) !important;
+  scroll-padding-left: var(--jg-gutter);
+}
+
+.emby-scrollbuttons-button {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--jg-line-strong);
+  background: rgba(20, 22, 28, 0.35);
+  color: var(--jg-text);
+  margin-left: 6px;
+}
+
+.emby-scrollbuttons-button:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* ───────────────────────── Cards ───────────────────────── */
+
+.cardBox,
+.visualCardBox {
+  border-radius: var(--jg-r);
+  background: none;
+  margin: 8px;
+}
+
+.cardScalable {
+  border-radius: var(--jg-r);
+  overflow: hidden;
+  background: var(--jg-surface);
+  box-shadow: 0 10px 28px -12px rgba(0, 0, 0, 0.6);
+}
+
+/* The glass: a diagonal sheen and a lit top edge over all artwork */
+.cardScalable::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+  background: var(--jg-sheen);
+  box-shadow: var(--jg-sheen-edge);
+  pointer-events: none;
+  transition: box-shadow 0.25s var(--jg-ease), opacity 0.25s var(--jg-ease);
+}
+
+.card:hover .cardScalable::after,
+.card:focus-within .cardScalable::after {
+  box-shadow: inset 0 0 0 1.5px rgba(210, 235, 255, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    0 0 24px -4px rgba(150, 195, 255, 0.35);
+}
+
+/* Focus already gets the lit edge; don't also scale */
+.card.show-focus:focus .cardBox,
+.card-hoverable:hover .cardBox {
+  transform: none;
+}
+
+.cardImageContainer {
+  border-radius: inherit;
+}
+
+.cardImageIcon {
+  color: var(--jg-text-4);
+}
+
+.cardPadder {
+  background: var(--jg-surface);
+}
+
+/* Titles under cards: left aligned, title over subtitle */
+.cardText,
+.cardTextCentered {
+  text-align: left !important;
+  padding-left: 2px;
+  padding-right: 2px;
+}
+
+.cardText-first {
+  padding-top: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--jg-text);
+}
+
+.cardText-secondary {
+  font-size: 13px;
+  color: var(--jg-text-3);
+}
+
+.cardFooter {
+  padding-top: 0;
+}
+
+/* Watch progress */
+.itemProgressBar {
+  height: 4px;
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.itemProgressBarForeground {
+  background: var(--jg-accent);
+}
+
+.innerCardFooter {
+  background: none !important;
+}
+
+.innerCardFooter-clear,
+.fullInnerCardFooter {
+  border-radius: 0;
+}
+
+/* Count & played badges */
+.countIndicator,
+.playedIndicator,
+.indicator {
+  background: rgba(20, 22, 28, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(12px);
+  color: var(--jg-text);
+  font-family: var(--jg-font);
+  font-size: 12px;
+  font-weight: 600;
+  min-width: 26px;
+  height: 26px;
+}
+
+.playedIndicator .material-icons {
+  font-size: 16px;
+}
+
+.cardIndicators {
+  top: 8px;
+  right: 8px;
+}
+
+/* Hover controls become glass circles */
+.cardOverlayContainer {
+  background: linear-gradient(180deg, rgba(20, 22, 28, 0) 40%, rgba(20, 22, 28, 0.55)) !important;
+  border-radius: inherit;
+  z-index: 3;
+}
+
+.cardOverlayButton {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  margin: 0 0 0 6px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(20, 22, 28, 0.35);
+  backdrop-filter: blur(12px);
+  color: var(--jg-text);
+}
+
+.cardOverlayButton:hover {
+  background: rgba(20, 22, 28, 0.65);
+}
+
+.cardOverlayButtonIcon {
+  font-size: 19px !important;
+}
+
+.cardOverlayButton-br {
+  right: 8px;
+  bottom: 8px;
+}
+
+.cardOverlayContainer .cardOverlayButton.cardOverlayFab-primary {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+  padding: 0;
+  width: 52px;
+  height: 52px;
+  margin: 0;
+  border: 0;
+  background: var(--jg-text);
+  color: var(--jg-bg);
+  backdrop-filter: none;
+}
+
+.cardOverlayContainer .cardOverlayButton.cardOverlayFab-primary:hover {
+  background: #fff;
+}
+
+.cardOverlayFab-primary .cardOverlayButtonIcon {
+  font-size: 30px !important;
+}
+
+/* My Media: tinted glass tiles with the library's icon and name, as in the design.
+   The generated library art has the name baked in, so it is replaced by the tint. */
+.homeSectionsContainer .card[data-type="CollectionFolder"],
+.homeSectionsContainer .card[data-type="UserView"] {
+  --jg-hue: 250;
+  --jg-glyph: "folder";
+}
+
+.homeSectionsContainer .card[data-collectiontype="movies"] {
+  --jg-hue: 235;
+  --jg-glyph: "movie";
+}
+
+.homeSectionsContainer .card[data-collectiontype="tvshows"] {
+  --jg-hue: 205;
+  --jg-glyph: "tv";
+}
+
+.homeSectionsContainer .card[data-collectiontype="tvshows"][data-path*="anime" i] {
+  --jg-hue: 15;
+  --jg-glyph: "animation";
+}
+
+.homeSectionsContainer .card[data-collectiontype="boxsets"] {
+  --jg-hue: 75;
+  --jg-glyph: "collections_bookmark";
+}
+
+.homeSectionsContainer .card[data-collectiontype="music"] {
+  --jg-hue: 320;
+  --jg-glyph: "library_music";
+}
+
+.homeSectionsContainer .card[data-collectiontype="books"] {
+  --jg-hue: 40;
+  --jg-glyph: "menu_book";
+}
+
+.homeSectionsContainer .card[data-collectiontype="homevideos"] {
+  --jg-hue: 280;
+  --jg-glyph: "photo_library";
+}
+
+.homeSectionsContainer .card[data-collectiontype="livetv"] {
+  --jg-hue: 170;
+  --jg-glyph: "live_tv";
+}
+
+.homeSectionsContainer .card[data-collectiontype="playlists"] {
+  --jg-hue: 300;
+  --jg-glyph: "queue_music";
+}
+
+.homeSectionsContainer .card[data-type="CollectionFolder"] .cardBox,
+.homeSectionsContainer .card[data-type="UserView"] .cardBox {
+  position: relative;
+  padding-bottom: 0;
+}
+
+.homeSectionsContainer .card[data-type="CollectionFolder"] .cardScalable,
+.homeSectionsContainer .card[data-type="UserView"] .cardScalable {
+  border-radius: var(--jg-r-lg);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+.homeSectionsContainer .card[data-type="CollectionFolder"] .cardImageContainer,
+.homeSectionsContainer .card[data-type="UserView"] .cardImageContainer {
+  background: linear-gradient(135deg, oklch(0.34 0.07 var(--jg-hue)), oklch(0.2 0.03 var(--jg-hue))) !important;
+}
+
+.homeSectionsContainer .card[data-type="CollectionFolder"] .blurhash-canvas,
+.homeSectionsContainer .card[data-type="UserView"] .blurhash-canvas,
+.homeSectionsContainer .card[data-type="CollectionFolder"] .cardImageIcon,
+.homeSectionsContainer .card[data-type="UserView"] .cardImageIcon {
+  display: none !important;
+}
+
+/* Icon in a small glass square, top left */
+.homeSectionsContainer .card[data-type="CollectionFolder"] .cardImageContainer::before,
+.homeSectionsContainer .card[data-type="UserView"] .cardImageContainer::before {
+  content: var(--jg-glyph);
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 3;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 11px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(12px);
+  color: #fff;
+  font-family: var(--jg-icons);
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1;
+  font-variation-settings: "FILL" 0, "wght" 400, "opsz" 24;
+  -webkit-font-feature-settings: "liga";
+  font-feature-settings: "liga";
+}
+
+/* Name sits inside the tile, bottom left */
+.homeSectionsContainer .card[data-type="CollectionFolder"] .cardText-first,
+.homeSectionsContainer .card[data-type="UserView"] .cardText-first {
+  position: absolute;
+  left: 16px;
+  right: 56px;
+  bottom: 14px;
+  z-index: 4;
+  padding: 0;
+  height: auto !important;
+  overflow: visible !important;
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  color: #fff;
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35);
+  pointer-events: none;
+}
+
+/* Library count, filled in by the optional jellyglass script */
+.homeSectionsContainer .card .cardText-first[data-jg-count]::after {
+  content: attr(data-jg-count);
+  display: block;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--jg-text-2);
+}
+
+.homeSectionsContainer .card[data-jg-count] .cardText-first {
+  bottom: 12px;
+}
+
+/* Keep the menu button visible, bottom right, without the hover shade */
+.homeSectionsContainer .card[data-type="CollectionFolder"] .cardOverlayContainer,
+.homeSectionsContainer .card[data-type="UserView"] .cardOverlayContainer,
+.homeSectionsContainer .card[data-type="CollectionFolder"] .cardOverlayButton-hover,
+.homeSectionsContainer .card[data-type="UserView"] .cardOverlayButton-hover {
+  opacity: 1 !important;
+  visibility: visible !important;
+  background: none !important;
+}
+
+.homeSectionsContainer .card[data-type="CollectionFolder"] .cardOverlayContainer,
+.homeSectionsContainer .card[data-type="UserView"] .cardOverlayContainer {
+  display: block !important;
+}
+
+.homeSectionsContainer .card[data-type="CollectionFolder"] .cardOverlayButton-br,
+.homeSectionsContainer .card[data-type="UserView"] .cardOverlayButton-br {
+  right: 10px;
+  bottom: 10px;
+}
+
+.homeSectionsContainer .card[data-type="CollectionFolder"] .cardOverlayButton,
+.homeSectionsContainer .card[data-type="UserView"] .cardOverlayButton {
+  background: rgba(20, 22, 28, 0.45);
+}
+
+/* Poster stack, drawn when the optional jellyglass script adds .jg-stack */
+.jg-stack {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.jg-stack > span {
+  position: absolute;
+  width: 78px;
+  aspect-ratio: 2 / 3;
+  border-radius: 8px;
+  background: var(--jg-surface-2) center / cover no-repeat;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+}
+
+.jg-stack > span::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.08) 30%, rgba(255, 255, 255, 0) 52%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+}
+
+.jg-stack > span:nth-child(1) {
+  top: 8px;
+  right: 96px;
+  transform: rotate(-14deg);
+  z-index: 1;
+}
+
+.jg-stack > span:nth-child(2) {
+  top: 44px;
+  right: 62px;
+  transform: rotate(-2deg);
+  z-index: 2;
+}
+
+.jg-stack > span:nth-child(3) {
+  top: 78px;
+  right: 20px;
+  transform: rotate(10deg);
+  z-index: 3;
+}
+
+/* With fewer than three posters, fill the front slots */
+.jg-stack > span:only-child {
+  top: 40px;
+  right: 40px;
+  transform: rotate(6deg);
+}
+
+.jg-stack > span:first-child:nth-last-child(2) {
+  top: 30px;
+  right: 72px;
+  transform: rotate(-6deg);
+}
+
+.jg-stack > span:nth-child(2):last-child {
+  top: 62px;
+  right: 24px;
+  transform: rotate(8deg);
+}
+
+.jg-stack.is-square > span {
+  width: 92px;
+  aspect-ratio: 1;
+}
+
+/* Cast & crew: circles */
+.personCard .cardScalable {
+  border-radius: 50%;
+  box-shadow: none;
+}
+
+.personCard .cardPadder-overflowPortrait,
+.personCard .cardPadder-portrait {
+  padding-bottom: 100%;
+}
+
+.personCard .cardText-first {
+  font-size: 14px;
+}
+
+.personCard .cardText-secondary {
+  font-size: 12px;
+}
+
+/* ───────────────────────── Lists (episodes, tracks) ───────────────────────── */
+
+.listItem {
+  border-radius: var(--jg-r);
+  padding: 10px 8px;
+}
+
+.listItem:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.listItemImage {
+  border-radius: var(--jg-r);
+  overflow: hidden;
+  box-shadow: var(--jg-sheen-edge);
+}
+
+.listItemImage-large {
+  width: 200px;
+  height: 112px;
+}
+
+.listItemBodyText:first-child,
+.listItemBody > .listItemBodyText:first-child {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--jg-text);
+}
+
+.secondary.listItemBodyText,
+.listItemBodyText.secondary {
+  color: var(--jg-text-3);
+  font-size: 13px;
+}
+
+.listItem-overview {
+  color: var(--jg-text-2);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.listItemImageButton {
+  width: 44px;
+  height: 44px;
+  margin: auto;
+  padding: 0;
+  font-size: 26px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(20, 22, 28, 0.4);
+  backdrop-filter: blur(12px);
+  color: var(--jg-text);
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.listItem:hover .listItemImageButton,
+.listItem:focus-within .listItemImageButton {
+  opacity: 1;
+}
+
+.listItemImageButton:hover {
+  background: var(--jg-text);
+  color: var(--jg-bg);
+}
+
+.listItemImageButton .material-icons {
+  font-size: 26px;
+  font-variation-settings: "FILL" 1;
+}
+
+.listItemIndicators .playedIndicator {
+  background: var(--jg-accent);
+  color: var(--jg-bg);
+  border: 0;
+}
+
+/* ───────────────────────── Title page ───────────────────────── */
+
+/* With backdrops on, the art is a fixed layer behind the page. Let it show
+   clearly at the top, then fade the page to solid so text below stays legible. */
+body:has(.itemDetailPage:not(.hide)) .backgroundContainer.withBackdrop {
+  background: linear-gradient(90deg, rgba(20, 22, 28, 0.85) 0%, rgba(20, 22, 28, 0.3) 50%, rgba(20, 22, 28, 0) 100%),
+    rgba(20, 22, 28, 0.2);
+}
+
+.layout-desktop .itemDetailPage .detailPageWrapperContainer {
+  background: linear-gradient(180deg, rgba(20, 22, 28, 0) 0, rgba(20, 22, 28, 0.7) 260px, #14161c 520px) !important;
+}
+
+.itemBackdrop {
+  height: 62vh;
+  max-height: 640px;
+}
+
+.layout-desktop .detailLogo {
+  top: 96px;
+  right: var(--jg-gutter);
+  left: auto;
+  width: 26vw;
+  max-width: 420px;
+  height: 18vh;
+  background-position: right center;
+}
+
+/* Stack everything at the left gutter, pulled up into the backdrop */
+.layout-desktop .detailPageWrapperContainer {
+  margin-top: -34vh;
+  position: relative;
+  z-index: 1;
+}
+
+.layout-desktop .detailPagePrimaryContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding-left: var(--jg-gutter) !important;
+  padding-right: var(--jg-gutter) !important;
+}
+
+.layout-desktop .detailPagePrimaryContainer > .detailImageContainer {
+  position: static;
+  height: auto !important;
+  flex: none;
+  margin-bottom: 28px;
+}
+
+.layout-desktop .detailImageContainer .card {
+  position: static;
+  width: 200px;
+  float: none;
+  margin: 0 !important;
+}
+
+.layout-desktop .detailImageContainer .cardBox {
+  margin: 0;
+}
+
+.detailImageContainer .cardScalable {
+  border-radius: 12px;
+  box-shadow: 0 24px 50px -12px rgba(0, 0, 0, 0.7);
+}
+
+.detailRibbon {
+  background: none !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.layout-desktop .detailRibbon .infoWrapper {
+  padding: 0;
+  margin: 0;
+}
+
+.layout-desktop .detailPagePrimaryContent,
+.layout-desktop .detailPageContent {
+  padding: 0 !important;
+  margin: 0;
+}
+
+.layout-desktop .detailPagePrimaryContent .detailSection {
+  margin-top: 20px;
+}
+
+.layout-desktop .detailPageSecondaryContainer {
+  padding-left: var(--jg-gutter) !important;
+  margin: 0;
+}
+
+.itemName.infoText,
+.nameContainer .itemName {
+  font-size: clamp(34px, 5vw, 56px);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.02;
+  color: var(--jg-text);
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.35);
+}
+
+.itemName.originalTitle,
+.parentName {
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0 !important;
+  color: var(--jg-text-3) !important;
+  margin-top: 6px;
+}
+
+.parentNameLast:not(.withOriginalTitle) {
+  margin-bottom: 0.2em;
+}
+
+.itemMiscInfo {
+  gap: 14px;
+  color: var(--jg-text-2);
+  font-size: 14px;
+  margin-top: 8px;
+}
+
+.mediaInfoItem {
+  margin-right: 0;
+}
+
+.mediaInfoOfficialRating,
+.mediaInfoText {
+  border: 1px solid #4a4f5c;
+  border-radius: 4px;
+  padding: 1px 6px;
+  font-size: 12px;
+  color: var(--jg-text-2);
+  background: none;
+}
+
+.starRatingContainer {
+  font-weight: 600;
+  color: var(--jg-text);
+}
+
+.starIcon {
+  color: #f5c518;
+  font-variation-settings: "FILL" 1;
+}
+
+.mediaInfoCriticRating {
+  font-weight: 600;
+}
+
+.mainDetailButtons {
+  gap: 10px;
+  margin: 0 !important;
+  flex-wrap: wrap;
+}
+
+/* Play / Resume becomes a labelled light button */
+.detailButton {
+  width: 46px;
+  height: 46px;
+  margin: 0 !important;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid var(--jg-glass-line);
+  background: var(--jg-glass);
+  backdrop-filter: blur(14px);
+  color: var(--jg-text);
+}
+
+.detailButton:hover {
+  background: var(--jg-glass-hover);
+}
+
+.detailButton-content {
+  margin: 0;
+}
+
+.detailButton-icon {
+  font-size: 22px;
+}
+
+.btnPlay.detailButton,
+.btnResume.detailButton {
+  width: auto;
+  padding: 0 22px 0 16px;
+  border-radius: 999px;
+  border: 0;
+  background: var(--jg-text);
+  color: var(--jg-bg);
+  backdrop-filter: none;
+}
+
+.btnPlay.detailButton:hover,
+.btnResume.detailButton:hover {
+  background: #fff;
+}
+
+/* The button's own title ("Play", "Resume", translated) becomes its label */
+.btnPlay.detailButton,
+.btnResume.detailButton {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.btnPlay.detailButton::after,
+.btnResume.detailButton::after {
+  content: attr(title);
+  font-size: 15px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.btnPlay.detailButton .detailButton-icon,
+.btnResume.detailButton .detailButton-icon {
+  font-size: 26px;
+}
+
+.btnUserRating[data-isfavorite="true"] .detailButton-icon {
+  color: #ff5a6e;
+}
+
+.btnPlaystate[data-played="true"] .detailButton-icon {
+  color: var(--jg-accent);
+}
+
+.detailPagePrimaryContent .overview,
+.detail-clamp-text {
+  color: var(--jg-text-2);
+  font-size: 16px;
+  line-height: 1.6;
+  max-width: 64ch;
+  text-wrap: pretty;
+}
+
+.itemGenres,
+.itemTags,
+.itemExternalLinks {
+  color: var(--jg-text-3);
+  font-size: 13px;
+}
+
+.itemTags .button-link,
+.itemExternalLinks .button-link,
+.itemGenres .button-link {
+  color: var(--jg-text-2);
+  font-weight: 500;
+}
+
+.itemTags .button-link:hover,
+.itemExternalLinks .button-link:hover {
+  color: var(--jg-text);
+}
+
+.itemDetailsGroup {
+  margin: 20px 0;
+  max-width: 64ch;
+}
+
+.detailsGroupItem {
+  padding: 3px 0;
+}
+
+.detailsGroupItem .label {
+  color: var(--jg-text-3);
+  flex-basis: 7em;
+}
+
+.detailsGroupItem .content,
+.detailsGroupItem .content .button-link {
+  color: var(--jg-text);
+  font-weight: 500;
+}
+
+.trackSelections .selectContainer {
+  max-width: 34em;
+}
+
+.detailVerticalSection .sectionTitle {
+  margin-bottom: 10px;
+}
+
+/* Season tabs on series and season pages */
+.detailPagePrimaryContent .emby-tabs-slider,
+.itemDetailPage .childrenItemsContainer {
+  border-bottom: 1px solid var(--jg-line);
+}
+
+/* ───────────────────────── Tabs ───────────────────────── */
+
+.emby-tab-button {
+  color: var(--jg-text-3);
+  font-weight: 500;
+  font-size: 15px;
+  text-transform: none;
+  padding: 10px 2px;
+  margin: 0 14px;
+  border-radius: 0;
+  border-bottom: 2px solid transparent;
+}
+
+.emby-tab-button:hover {
+  color: var(--jg-text);
+}
+
+.emby-tab-button-active,
+.emby-tab-button.emby-button-focusscale:focus {
+  color: var(--jg-text);
+  border-bottom-color: var(--jg-text);
+}
+
+.headerTabs {
+  border-bottom: 1px solid var(--jg-line);
+}
+
+.MuiTab-root {
+  text-transform: none !important;
+  font-weight: 500 !important;
+}
+
+.MuiTabs-indicator {
+  background-color: var(--jg-text) !important;
+}
+
+/* ───────────────────────── Sign in ───────────────────────── */
+
+#loginPage {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse at center, rgba(20, 22, 28, 0.82) 0%, rgba(20, 22, 28, 0.97) 70%),
+    var(--jg-bg);
+}
+
+#loginPage > .padded-left {
+  width: min(560px, 100%);
+}
+
+#loginPage .sectionTitle {
+  font-size: 30px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  text-align: center;
+}
+
+#loginPage .manualLoginForm,
+#loginPage .readOnlyContent {
+  max-width: 360px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#loginPage .inputContainer {
+  margin-bottom: 16px;
+}
+
+#loginPage .inputLabel {
+  position: static;
+  transform: none;
+  margin-bottom: 6px;
+  display: block;
+}
+
+#loginPage .button-submit,
+#loginPage .raised.cancel {
+  margin-top: 10px;
+  padding: 12px 18px;
+  font-size: 15px;
+}
+
+#loginPage .btnForgotPassword {
+  border: 0;
+  color: var(--jg-text-3);
+  margin-top: 4px;
+}
+
+#loginPage .btnForgotPassword:hover {
+  color: var(--jg-text);
+  background: none;
+}
+
+/* Who's watching: profile circles */
+#divUsers {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 28px;
+}
+
+#divUsers .card {
+  width: 88px !important;
+}
+
+#divUsers .cardBox {
+  margin: 0;
+}
+
+#divUsers .cardScalable {
+  border-radius: 50%;
+  box-shadow: none;
+  transition: outline-offset 0.15s;
+}
+
+#divUsers .cardScalable::after {
+  display: none;
+}
+
+#divUsers .card:hover .cardScalable,
+#divUsers .card:focus-visible .cardScalable {
+  outline: 2px solid var(--jg-text);
+  outline-offset: 4px;
+}
+
+#divUsers .cardPadder {
+  padding-bottom: 100%;
+}
+
+#divUsers .cardImageContainer {
+  background-color: oklch(0.45 0.1 330);
+}
+
+#divUsers .cardText {
+  text-align: center !important;
+  font-size: 15px;
+  font-weight: 500;
+  padding-top: 10px;
+}
+
+/* ───────────────────────── Player ───────────────────────── */
+
+.osdHeader {
+  background: linear-gradient(rgba(7, 8, 10, 0.7), rgba(7, 8, 10, 0)) !important;
+}
+
+.osdHeader .headerTop,
+.videoOsd-appBar {
+  padding: 16px var(--jg-gutter) 0 !important;
+}
+
+.videoOsd-appBar .MuiIconButton-root {
+  width: 44px;
+  height: 44px;
+  margin-left: 6px;
+}
+
+.videoOsd-appBar > .MuiIconButton-root:first-child {
+  margin: 0 16px 0 0;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(20, 22, 28, 0.35);
+  backdrop-filter: blur(12px);
+}
+
+.videoOsd-appBar .MuiIconButton-root:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.videoOsd-appBar .MuiTypography-root {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.osdHeader .headerBackButton {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(20, 22, 28, 0.35);
+  backdrop-filter: blur(12px);
+  margin-right: 16px;
+}
+
+.osdHeader .pageTitle {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.videoOsdBottom {
+  background: linear-gradient(rgba(7, 8, 10, 0), rgba(7, 8, 10, 0.85) 60%) !important;
+  padding: 40px var(--jg-gutter) 22px !important;
+}
+
+.osdTitle,
+.videoOsdBottom .osdTitle {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.osdSecondaryText,
+.osdMediaInfo {
+  color: var(--jg-text-2);
+  font-size: 13px;
+}
+
+.osdTextContainer {
+  font-variant-numeric: tabular-nums;
+  color: var(--jg-text-2);
+  font-size: 13px;
+}
+
+.videoOsdBottom .btnPause {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--jg-text);
+  color: var(--jg-bg);
+}
+
+.videoOsdBottom .btnPause .material-icons {
+  font-size: 30px;
+}
+
+.videoOsdBottom .paper-icon-button-light:not(.btnPause):hover,
+.osdHeader .paper-icon-button-light:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 50%;
+}
+
+/* Seek bar */
+.mdl-slider {
+  height: 4px;
+}
+
+.mdl-slider-background-flex-container {
+  border-radius: 999px;
+}
+
+.mdl-slider-background-flex {
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+}
+
+.mdl-slider-background-lower {
+  background: var(--jg-accent) !important;
+}
+
+.mdl-slider-background-upper {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.mdl-slider::-webkit-slider-thumb {
+  background: #fff !important;
+}
+
+.mdl-slider::-moz-range-thumb {
+  background: #fff !important;
+}
+
+.sliderBubble {
+  background: var(--jg-surface-2);
+  border: 1px solid var(--jg-line-strong);
+  border-radius: var(--jg-r-sm);
+}
+
+/* Subtitles drawn by the web player */
+.videoSubtitlesInner {
+  font-family: var(--jg-font);
+  font-weight: 500;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.9);
+}
+
+/* Now-playing bar */
+.nowPlayingBar {
+  background: rgba(20, 22, 28, 0.88);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid var(--jg-line);
+}
+
+.nowPlayingImage {
+  border-radius: 6px;
+}
+
+.nowPlayingBarTop .mdl-slider-background-lower {
+  background: var(--jg-accent) !important;
+}
+
+/* ───────────────────────── Small screens ───────────────────────── */
+
+@media (max-width: 62.5em) {
+  header.MuiAppBar-root .MuiToolbar-root > .MuiStack-root > a:not([href="#/"]) {
+    padding: 0 12px;
+  }
+
+  .layout-desktop .detailImageContainer .card {
+    width: 160px;
+  }
+}
+
+@media (max-width: 50em) {
+  .itemName.infoText,
+  .nameContainer .itemName {
+    font-size: clamp(30px, 8vw, 40px);
+  }
+
+  .detailRibbon {
+    margin-top: 0;
+  }
+}
+
+/* ───────────────────────── Motion ───────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
