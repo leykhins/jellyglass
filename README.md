@@ -59,6 +59,12 @@ Header and library nav, home hero, My Media tiles, home rows and cards, library 
 - **Sign-in profiles.** "Who's watching?" circles only appear for users who aren't hidden from the login screen.
 - **Admin dashboard.** Gets the palette and type, but not a redesigned layout.
 
+## Troubleshooting
+
+**Banner or My Media posters missing after installing plugins.** File Transformation edits Jellyfin's page as it's
+sent, but the page's cache tag doesn't change. So a browser that opened Jellyfin before the plugins were installed
+keeps reusing its old copy. Do a hard refresh (Ctrl+Shift+R), or clear the site's cached data, once per browser.
+
 ## Licences
 
 Fonts embedded in the offline build: Onest (SIL Open Font License 1.1) and Material Symbols (Apache License 2.0).
