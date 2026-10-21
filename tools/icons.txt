@@ -12,6 +12,7 @@ arrow_drop_up
 arrow_forward
 audiotrack
 autorenew
+backup
 block
 bookmark
 bookmark_border
@@ -38,9 +39,11 @@ control_point
 dashboard
 delete
 delete_outline
+description
 devices
 done
 download
+dvr
 edit
 equalizer
 error
@@ -50,6 +53,7 @@ expand_less
 expand_more
 explicit
 explore
+extension
 face
 fast_forward
 fast_rewind
@@ -67,6 +71,7 @@ forward_30
 fullscreen
 get_app
 grid_view
+group
 groups
 hd
 help
@@ -80,12 +85,14 @@ image
 info
 info_outline
 insert_drive_file
+key
 keyboard
 keyboard_arrow_down
 keyboard_arrow_left
 keyboard_arrow_right
 keyboard_arrow_up
 label
+lan
 language
 library_add_check
 library_music
@@ -113,6 +120,7 @@ new_releases
 notes
 notifications
 open_in_new
+palette
 pause
 pause_circle
 pending
@@ -160,6 +168,7 @@ skip_previous
 slideshow
 sort
 sort_by_alpha
+space_dashboard
 speed
 sports
 star

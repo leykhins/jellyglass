@@ -10,6 +10,8 @@ Built and checked against jellyfin-web 12.2 (the layout with the Material UI hea
 ![Title page](screenshots/title.png)
 ![Series page](screenshots/series.png)
 ![Sign in](screenshots/signin.png)
+![Dashboard](screenshots/dashboard.png)
+![Dashboard settings](screenshots/dashboard-general.png)
 
 ## Install
 
@@ -26,7 +28,8 @@ Save and reload the web client. Keep **Dark** selected under Settings → Displa
 - clickable hero slide bars;
 - season tabs and an episode list on series pages;
 - a bottom tab bar on phones;
-- initials and a poster wall on the sign-in page.
+- initials and a poster wall on the sign-in page;
+- the admin dashboard theme (see below).
 
 Without it, the theme still works. To install it, add the **JavaScript Injector** plugin (which needs
 **File Transformation**). Add a script with *Requires authentication* **unticked**, so it also runs on the sign-in
@@ -54,10 +57,26 @@ jsDelivr caches `@main` for up to 12 hours. To pick up a change sooner, purge th
 The banner is styled for the **Media Bar Enhanced** plugin. For key art instead of trailer footage,
 turn off *Enable video backdrop* in its settings. If the Abyss spotlight is still installed, jellyglass hides it.
 
+## Admin dashboard
+
+Jellyfin's dashboard doesn't load the server's Custom CSS, so the script links the same stylesheet
+(`/Branding/Css.css`) whenever a dashboard page is open, and removes it when you leave. It also adds the page
+captions and section descriptions from the design. Without the script, the dashboard keeps Jellyfin's stock look.
+
+The design's layouts are drawn over Jellyfin's own pages, so every control still does what it did before:
+- **Overview:** your server's name as the title, a stats strip, devices as compact rows, and alerts and paths in a
+  side column.
+- **Settings pages:** a heading column and a field column, with switches in place of checkboxes.
+- **Users, plugins:** list rows.
+- **Libraries:** cards.
+- **Live TV:** two panels.
+- **Devices, activity:** tables in the same panels.
+
 ## What it covers
 
 Header and library nav, home hero, My Media tiles, home rows and cards, library grids, title pages
-(movie, series, season, episode list), cast, sign in, menus and dialogs, form fields, and the video player.
+(movie, series, season, episode list), cast, sign in, menus and dialogs, form fields, the video player, and the
+admin dashboard.
 
 ## Known gaps
 
@@ -67,7 +86,10 @@ Header and library nav, home hero, My Media tiles, home rows and cards, library 
 - **Sign-in profiles.** "Who's watching?" circles only appear for users who aren't hidden from the login screen.
   The poster wall behind them uses posters remembered from the last signed-in visit in that browser.
 - **Artist pages.** Styled with the general page rules, but not checked against the design without a music library.
-- **Admin dashboard.** Gets the palette and type, but not a redesigned layout.
+- **Admin dashboard extras.** The design's notice banner (disk space, plugin updates), its Installed/Catalog tabs
+  for plugins and its day-grouped activity list aren't drawn, because Jellyfin doesn't provide that data on those
+  pages. Older dashboard pages (user editing, plugin settings) get the palette and type but keep their layout. The
+  page captions are in English only.
 
 ## Troubleshooting
 

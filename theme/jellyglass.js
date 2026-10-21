@@ -5,7 +5,8 @@
  *   - Title pages: season tabs and an episode list beside the series info
  *   - Phones: a bottom tab bar with Home, your libraries and Search
  *   - Sign in: coloured initials on the profile circles and a wall of your posters behind them
- * The theme works without it. Install with the JavaScript Injector plugin.
+ *   - Dashboard: loads the theme there (Jellyfin leaves Custom CSS out) plus the page captions
+ * The client theme works without it. Install with the JavaScript Injector plugin.
  */
 (function () {
   "use strict";
@@ -410,6 +411,74 @@
     }
   }
 
+  // ───────────── Dashboard: load the theme and add the design's captions ─────────────
+
+  // Jellyfin's dashboard layout leaves out the server's Custom CSS, so link it here
+  var SUBTITLES = {
+    dashboardGeneralPage: "Server identity, paths and performance limits.",
+    brandingPage: "What people see on the sign-in screen and across the web client.",
+    userProfilesPage: "Accounts, permissions and library access.",
+    mediaLibraryPage: "Media folders and how they are scanned and matched.",
+    devicesPage: "Every app that has signed in to this server.",
+    serverActivityPage: "Sign-ins, playback, plugin changes and server warnings.",
+    liveTvStatusPage: "Tuners, guide data and recordings.",
+    pluginsPage: "Plugins run inside your server. Installs, updates and removals take effect after a restart.",
+    encodingSettingsPage: "Transcoding, resume points, streaming limits and trickplay.",
+    playbackConfigurationPage: "Transcoding, resume points, streaming limits and trickplay.",
+    streamingSettingsPage: "Transcoding, resume points, streaming limits and trickplay.",
+    trickplayConfigurationPage: "Transcoding, resume points, streaming limits and trickplay.",
+    networkingPage: "Ports, addresses and remote access.",
+    apiKeysPage: "Keys that let other apps talk to this server.",
+    backupsPage: "Snapshots of your server's settings and database.",
+    logPage: "Server log files, newest first.",
+    scheduledTasksPage: "Background jobs and when they run.",
+  };
+
+  var SECTIONS = {
+    "Paths": "Program data, logs and web files are set when the server starts (--datadir, --logdir, --webdir) and can’t be changed here.",
+    "Quick Connect": "Sign in on a TV by approving a code from a device that’s already signed in.",
+    "Performance": "Lower these on low-power hardware.",
+  };
+
+  function decorateAdmin() {
+    var admin = !!document.querySelector(".dashboard-appBar");
+    document.documentElement.classList.toggle("jg-admin", admin);
+    var link = document.getElementById("jg-admin-css");
+    if (!admin) {
+      if (link) link.remove();
+      return;
+    }
+    if (!link && api()) {
+      link = document.createElement("link");
+      link.id = "jg-admin-css";
+      link.rel = "stylesheet";
+      link.href = api().getUrl("Branding/Css.css");
+      document.head.appendChild(link);
+    }
+
+    var head = document.querySelector(".MuiDrawer-paper > .MuiList-root:first-child .MuiListItemIcon-root");
+    var name = document.querySelector(".MuiDrawer-paper > .MuiList-root:first-child .MuiListItemText-primary");
+    var initial = name && name.textContent.trim().charAt(0).toUpperCase();
+    if (head && initial && head.getAttribute("data-jg-initial") !== initial) head.setAttribute("data-jg-initial", initial);
+
+    var page = document.querySelector(".type-interior.page:not(.hide)");
+    if (!page) return;
+    var sub = SUBTITLES[page.id];
+    var title = page.querySelector("h1, .sectionTitleContainer > .sectionTitle, .MuiTypography-h1");
+    if (sub && title && !title.hasAttribute("data-jg-sub")) title.setAttribute("data-jg-sub", sub);
+    page.querySelectorAll("form h2").forEach(function (h) {
+      var desc = SECTIONS[h.textContent.trim()];
+      if (desc && !h.hasAttribute("data-jg-desc")) h.setAttribute("data-jg-desc", desc);
+    });
+    page.querySelectorAll(".localUsers .card").forEach(function (card, i) {
+      var image = card.querySelector(".cardImage");
+      var nameText = card.querySelector(".cardText span");
+      if (!image || !nameText || image.hasAttribute("data-jg-initial") || !image.querySelector(".cardImageIcon")) return;
+      image.setAttribute("data-jg-initial", nameText.textContent.trim().charAt(0).toUpperCase());
+      image.style.setProperty("--jg-user-hue", HUES[(i + 1) % HUES.length]);
+    });
+  }
+
   var queued = false;
   new MutationObserver(function () {
     if (queued) return;
@@ -421,6 +490,7 @@
       decorateDetail();
       buildTabbar();
       decorateLogin();
+      decorateAdmin();
     });
   }).observe(document.documentElement, { childList: true, subtree: true });
 
