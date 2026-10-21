@@ -101,6 +101,40 @@
     for (var i = 0; i < cards.length; i++) decorate(cards[i]);
   }
 
+  // Media Bar Enhanced draws its slide bars as indicators only. Make each one go to its slide.
+  function goToSlide(dot) {
+    var mbe = window.mediaBarEnhanced;
+    var index = parseInt(dot.getAttribute("data-index"), 10);
+    if (!mbe || !mbe.SlideshowManager || isNaN(index)) return;
+    if (index !== mbe.STATE.slideshow.currentSlideIndex) mbe.SlideshowManager.updateCurrentSlide(index);
+  }
+
+  document.addEventListener("click", function (e) {
+    var dot = e.target.closest && e.target.closest("#slides-container .dot");
+    if (!dot) return;
+    e.preventDefault();
+    e.stopPropagation();
+    goToSlide(dot);
+  }, true);
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key !== "Enter" && e.key !== " ") return;
+    var dot = e.target.closest && e.target.closest("#slides-container .dot");
+    if (!dot) return;
+    e.preventDefault();
+    goToSlide(dot);
+  }, true);
+
+  function labelDots() {
+    var dots = document.querySelectorAll("#slides-container .dot:not([role])");
+    for (var i = 0; i < dots.length; i++) {
+      var n = parseInt(dots[i].getAttribute("data-index"), 10) + 1;
+      dots[i].setAttribute("role", "button");
+      dots[i].setAttribute("tabindex", "0");
+      dots[i].setAttribute("aria-label", "Show slide " + n);
+    }
+  }
+
   var queued = false;
   new MutationObserver(function () {
     if (queued) return;
@@ -108,6 +142,7 @@
     requestAnimationFrame(function () {
       queued = false;
       scan();
+      labelDots();
     });
   }).observe(document.documentElement, { childList: true, subtree: true });
 

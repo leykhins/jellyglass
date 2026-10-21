@@ -949,23 +949,36 @@ header.MuiAppBar-root .MuiIconButton-root:has(.MuiAvatar-root) {
   scale: 1 !important;
   width: auto !important;
   top: auto !important;
-  bottom: calc(20vh + 10px) !important;
-  right: var(--jg-gutter) !important;
-  gap: 8px;
+  bottom: calc(20vh + 8px) !important;
+  right: calc(var(--jg-gutter) + 96px) !important;
+  gap: 4px;
   padding: 0 !important;
 }
 
+/* Bars are 3px tall but the click target is 19px; the jellyglass script makes them jump to their slide */
 #slides-container .dot {
   width: 28px !important;
-  height: 3px !important;
+  height: 19px !important;
   margin: 0 !important;
-  border-radius: 2px !important;
-  background: rgba(236, 237, 241, 0.25) !important;
+  padding: 8px 2px !important;
+  box-sizing: border-box;
+  border-radius: 4px !important;
+  background: rgba(236, 237, 241, 0.25) content-box !important;
   transform: none !important;
+  cursor: pointer;
+}
+
+#slides-container .dot:hover {
+  background-color: rgba(236, 237, 241, 0.55) !important;
 }
 
 #slides-container .dot.active {
-  background: var(--jg-text) !important;
+  background-color: var(--jg-text) !important;
+}
+
+#slides-container .dot:focus-visible {
+  outline: 2px solid var(--jg-accent);
+  outline-offset: 0;
 }
 
 #slides-container .dots-container .media-bar-progress-bar {
@@ -1017,8 +1030,51 @@ header.MuiAppBar-root .MuiIconButton-root:has(.MuiAvatar-root) {
   line-height: 1 !important;
 }
 
+/* Previous and next: glass circles to the right of the bars */
 #slides-container .arrow {
-  display: none !important;
+  display: grid !important;
+  place-items: center;
+  opacity: 1 !important;
+  top: auto !important;
+  bottom: 20vh !important;
+  left: auto !important;
+  width: 36px !important;
+  height: 36px !important;
+  padding: 0 !important;
+  border-radius: 50% !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  background: rgba(20, 22, 28, 0.4) !important;
+  backdrop-filter: blur(12px);
+  color: var(--jg-text) !important;
+  transform: none !important;
+  cursor: pointer;
+  z-index: 6 !important;
+}
+
+#slides-container .arrow:hover {
+  background: rgba(255, 255, 255, 0.14) !important;
+}
+
+#slides-container .left-arrow {
+  right: calc(var(--jg-gutter) + 44px) !important;
+}
+
+#slides-container .right-arrow {
+  right: var(--jg-gutter) !important;
+}
+
+#slides-container .arrow i {
+  display: block;
+  width: auto !important;
+  height: auto !important;
+  position: static !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  transform: none !important;
+  font-family: var(--jg-icons) !important;
+  font-size: 22px !important;
+  line-height: 1 !important;
+  text-shadow: none !important;
 }
 
 @media (max-width: 50em) {
@@ -1049,14 +1105,19 @@ header.MuiAppBar-root .MuiIconButton-root:has(.MuiAvatar-root) {
   }
 
   #slides-container .dots-container {
-    bottom: calc(15vh - 30px) !important;
+    bottom: calc(15vh - 38px) !important;
     left: var(--jg-gutter) !important;
     right: auto !important;
-    gap: 6px;
+    gap: 2px;
   }
 
   #slides-container .dot {
-    width: 18px !important;
+    width: 22px !important;
+  }
+
+  /* Swipe or tap a bar instead */
+  #slides-container .arrow {
+    display: none !important;
   }
 }
 
