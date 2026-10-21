@@ -8,6 +8,8 @@ Built and checked against jellyfin-web 12.2 (the layout with the Material UI hea
 
 ![Home](screenshots/live-home.png)
 ![Title page](screenshots/title.png)
+![Series page](screenshots/series.png)
+![Sign in](screenshots/signin.png)
 
 ## Install
 
@@ -19,10 +21,16 @@ Built and checked against jellyfin-web 12.2 (the layout with the Material UI hea
 
 Save and reload the web client. Keep **Dark** selected under Settings → Display, because the theme loads on top of it.
 
-**My Media posters (optional).** `theme/jellyglass.js` adds each library's three newest posters and its item
-count to the My Media tiles. Without it, the tiles still show their tint, icon and name. Install the
-**JavaScript Injector** plugin (which needs **File Transformation**), add a script with *Requires authentication*
-ticked, and paste:
+**Script (optional).** `theme/jellyglass.js` draws the parts CSS can't:
+- My Media posters and item counts;
+- clickable hero slide bars;
+- season tabs and an episode list on series pages;
+- a bottom tab bar on phones;
+- initials and a poster wall on the sign-in page.
+
+Without it, the theme still works. To install it, add the **JavaScript Injector** plugin (which needs
+**File Transformation**). Add a script with *Requires authentication* **unticked**, so it also runs on the sign-in
+page, and paste:
 
 ```js
 (function () {
@@ -33,7 +41,7 @@ ticked, and paste:
 ```
 
 **Offline.** `dist/jellyglass.local.css` is the same theme with its fonts embedded, so it never needs the internet.
-Paste the whole file into Custom CSS instead of the `@import` line. For the posters, paste the whole of
+Paste the whole file into Custom CSS instead of the `@import` line. For the script, paste the whole of
 `theme/jellyglass.js` into JavaScript Injector instead of the loader. Icons the build doesn't include fall back to
 Jellyfin's own bundled icon font. To change which icons are embedded, edit `tools/icons.txt`, then rebuild with
 `python tools/build_local.py` (needs `pip install fonttools brotli`).
@@ -57,6 +65,8 @@ Header and library nav, home hero, My Media tiles, home rows and cards, library 
   library id (search the CSS for `animation`). On the My Media tiles, any TV library whose folder path contains
   "anime" gets it automatically.
 - **Sign-in profiles.** "Who's watching?" circles only appear for users who aren't hidden from the login screen.
+  The poster wall behind them uses posters remembered from the last signed-in visit in that browser.
+- **Artist pages.** Styled with the general page rules, but not checked against the design without a music library.
 - **Admin dashboard.** Gets the palette and type, but not a redesigned layout.
 
 ## Troubleshooting
